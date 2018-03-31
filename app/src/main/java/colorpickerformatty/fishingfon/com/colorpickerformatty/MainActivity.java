@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 
+
 public class MainActivity extends AppCompatActivity
         implements ColorPickerFragment.OnFragmentInteractionListener, MultiColorPickerFragment.OnFragmentInteractionListener, SavedColorsFragments.OnFragmentInteractionListener, ColorChangeSelectedListener {
 
