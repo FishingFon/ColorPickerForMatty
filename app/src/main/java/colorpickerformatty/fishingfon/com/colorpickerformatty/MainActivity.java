@@ -28,7 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-
+// MAIN
 public class MainActivity extends AppCompatActivity
         implements ColorPickerFragment.OnFragmentInteractionListener, MultiColorPickerFragment.OnFragmentInteractionListener, SavedColorsFragments.OnFragmentInteractionListener, ColorChangeSelectedListener {
 
