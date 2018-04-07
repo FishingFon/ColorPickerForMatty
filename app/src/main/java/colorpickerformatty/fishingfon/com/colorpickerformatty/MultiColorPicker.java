@@ -68,8 +68,10 @@ public class MultiColorPicker extends View {
     public MultiColorPickerListener listener;
     private Matrix gradientRotationMatrix;
 
-    /** Currently selected color */
-    private float[] colorHSV = new float[] { 0f, 0f, 1f };
+    /**
+     * Currently selected color
+     */
+    private float[] colorHSV = new float[]{0f, 0f, 1f};
     private float[] adjacentHue = new float[paramColorCount];
 
     public MultiColorPicker(Context context, AttributeSet attrs, int defStyle) {
@@ -159,9 +161,9 @@ public class MultiColorPicker extends View {
 
         // drawing value slider
 
-        float[] hsv = new float[] { colorHSV[0], colorHSV[1], 1f };
+        float[] hsv = new float[]{colorHSV[0], colorHSV[1], 1f};
 
-        SweepGradient sweepGradient = new SweepGradient(centerX, centerY, new int[] { Color.BLACK, Color.HSVToColor(hsv), Color.WHITE }, null);
+        SweepGradient sweepGradient = new SweepGradient(centerX, centerY, new int[]{Color.BLACK, Color.HSVToColor(hsv), Color.WHITE}, null);
         sweepGradient.setLocalMatrix(gradientRotationMatrix);
         valueSliderPaint.setShader(sweepGradient);
 
@@ -175,7 +177,7 @@ public class MultiColorPicker extends View {
 
         // drawing value pointer
 
-        valuePointerPaint.setColor(Color.HSVToColor(new float[] { 0f, 0f, 1f - colorHSV[2] }));
+        valuePointerPaint.setColor(Color.HSVToColor(new float[]{0f, 0f, 1f - colorHSV[2]}));
 
         double valueAngle = (colorHSV[2] - 0.5f) * Math.PI;
         float valueAngleX = (float) Math.cos(valueAngle);
@@ -277,7 +279,7 @@ public class MultiColorPicker extends View {
         int colorCount = 12;
         int colorAngleStep = 360 / 12;
         int colors[] = new int[colorCount + 1];
-        float hsv[] = new float[] { 0f, 1f, 1f };
+        float hsv[] = new float[]{0f, 1f, 1f};
         for (int i = 0; i < colors.length; i++) {
             hsv[0] = (i * colorAngleStep + 180) % 360;
             colors[i] = Color.HSVToColor(hsv);
@@ -383,7 +385,8 @@ public class MultiColorPicker extends View {
             super.onRestoreInstanceState(state);
         }
     }
-    public void setListener(MultiColorPickerListener listener){
+
+    public void setListener(MultiColorPickerListener listener) {
         this.listener = listener;
     }
 }

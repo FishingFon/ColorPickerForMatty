@@ -25,10 +25,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-
 
 
 public class MainActivity extends AppCompatActivity
@@ -111,33 +111,38 @@ public class MainActivity extends AppCompatActivity
         Log.v("Color in ARGB: ", "(" + A + ", " + R + ", " + G + ", " + B + ")");
         */
         Log.v("Time: ", "" + (System.currentTimeMillis() > timeOfLastHttpRequest + 200));
-        if (System.currentTimeMillis() > timeOfLastHttpRequest + 200){
+        if (System.currentTimeMillis() > timeOfLastHttpRequest + 10000) {
             timeOfLastHttpRequest = System.currentTimeMillis();
             Log.v("MainColor", Arrays.toString(color));
             //TODO add socket stuff
-            //new ColorRequest().execute(color);
+            new ColorRequest().execute(color);
+
         }
 
 
     }
 
-    class ColorRequest extends AsyncTask<int[], Void, String>{
+    class ColorRequest extends AsyncTask<int[], Void, String> {
 
         @Override
         protected String doInBackground(int[]... color) {
 
-            String responseString = null;
             try {
-                URL url = new URL("URL HERE");
-                HttpURLConnection urlConnection =(HttpURLConnection) url.openConnection();
+                URL url = new URL("http://www.purplemath.com/");
+                Log.v("HERE!!!!!!!!", "HERE TOO");
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 //urlConnection.setDoOutput(true);
-                urlConnection.setChunkedStreamingMode(0);
+               // urlConnection.setChunkedStreamingMode(0);
                 Log.v("Testing", Arrays.toString(color[0]));
-               // OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-                urlConnection.setRequestMethod("GET");
+                urlConnection.setReadTimeout(10000);
+                urlConnection.setConnectTimeout(15000);
                 urlConnection.setRequestProperty("User-Agent", "color_picker_1.0");
                 urlConnection.setRequestProperty("Content-Length", "0");
-                urlConnection.setRequestProperty("Lc", Arrays.toString(color[0]));
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setUseCaches(false);//set true to enable Cache for the req
+                urlConnection.setDoOutput(true);
+                //urlConnection.setRequestProperty("Lc", Arrays.toString(color[0]));
                 // TEST IM TODO DELETE LATER
                 int responseCode = urlConnection.getResponseCode();
                 Log.v(" TEST IN 2: ", "\nSending 'GET' request to URL : " + url);
@@ -150,11 +155,11 @@ public class MainActivity extends AppCompatActivity
 
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
-                }
-                in.close();
+               }
+               in.close();
 
                 //print result
-                Log.v(" HTTPRESPONSE: ", response.toString());
+               // Log.v(" HTTPRESPONSE: ", response.toString());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -162,6 +167,7 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
     }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -176,7 +182,7 @@ public class MainActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position){
+            switch (position) {
                 case 0:
                     return ColorPickerFragment.newInstance();
                 case 1:
